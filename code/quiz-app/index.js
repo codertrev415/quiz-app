@@ -25,7 +25,7 @@ function addElement(){
             document.body.appendChild(button)
             createDiv.textContent = (currentQuestion.answers[i])
             button.appendChild(createDiv)
-            button.addEventListener("click", () => {
+            button.addEventListener("click", (event) => {
                 const button = document.querySelector("answers")
                 button.classList.toggle("hidden")
                 
@@ -41,12 +41,13 @@ function addElement(){
 
 addElement()
 
+let button1 = document.getElementById(button1)
 
-const button = document.querySelector("button")
-button.classList.add("bold")
-button.addEventListener("click", () =>{
-    button.classList.toggle("hidden")
+button1.addEventListener("click", (event) =>{
+    console.log(event)
 })
+
+
 /*console.log(button)
 
 console.log(`Question ${i + 1}: ${currentQuestion.question}`)
