@@ -26,8 +26,7 @@ function addElement(){
             createDiv.textContent = (currentQuestion.answers[i])
             button.appendChild(createDiv)
             button.addEventListener("click", (event) => {
-                const button = document.querySelector("answers")
-                button.classList.toggle("hidden")
+                answer.classList.toggle.event.target("hidden")
                 
     //button.appendChild(button)
             })
