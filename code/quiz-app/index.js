@@ -18,15 +18,30 @@ function addElement(){
         
         for(let i = 0; i < currentQuestion.answers.length; i++){
             
-
             let button = document.createElement("button")
             createDiv = document.createElement("div")
+          
             document.body.appendChild(createDiv)
             document.body.appendChild(button)
             createDiv.textContent = (currentQuestion.answers[i])
             button.appendChild(createDiv)
             button.addEventListener("click", (event) => {
-                answer.classList.toggle.event.target("hidden")
+                const dialog = document.createElement("dialog")
+                const closeDialog = document.createElement("button")
+                if (event.target.innerText === currentQuestion.correct) {
+                    document.body.appendChild(dialog)
+                    dialog.textContent = (currentQuestion.correct)
+                    dialog.showModal()
+                    closeDialog.addEventListener("click" , () =>{
+                        document.body.appendChild(button)
+                        dialog.close()
+                    })
+
+
+                } else {
+                   
+                }
+               // answer.classList.toggle.event.target()
                 
     //button.appendChild(button)
             })
@@ -40,14 +55,14 @@ function addElement(){
 
 addElement()
 
-let button1 = document.getElementById(button1)
+/*let button1 = document.getElementById(button1)
 
 button1.addEventListener("click", (event) =>{
     console.log(event)
 })
 
 
-/*console.log(button)
+console.log(button)
 
 console.log(`Question ${i + 1}: ${currentQuestion.question}`)
     console.log(`Options: ${currentQuestion.answers.join(", ")}`)
