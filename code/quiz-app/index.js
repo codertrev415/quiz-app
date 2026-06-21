@@ -32,12 +32,14 @@ function addElement(){
                 dialog.showModal()
                 if (event.target.innerText === currentQuestion.correct) {
                     
-                    dialog.textContent = (`Yes! That's correct!. The answer is "${currentQuestion.correct}"!`)
+                   dialog.textContent = (`Yes! That's correct!. The answer is "${currentQuestion.correct}"!`)
                     
                     dialog.appendChild(closeDialog)
+                    closeDialog.textContent = ("Next")
+                    
 
                     closeDialog.addEventListener("click" , () =>{
-                        dialog.close("Next")
+                        dialog.close()
 
 
                         /*document.body.appendChild(dialog)
