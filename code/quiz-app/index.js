@@ -29,17 +29,20 @@ function addElement(){
                 const dialog = document.createElement("dialog")
                 const closeDialog = document.createElement("button")
                 if (event.target.innerText === currentQuestion.correct) {
+                    console.log()
                     document.body.appendChild(dialog)
-                    dialog.textContent = (currentQuestion.correct)
+                    dialog.textContent = (`Yes! That's correct!. The answer is "${currentQuestion.correct}"!`)
                     dialog.showModal()
                     closeDialog.addEventListener("click" , () =>{
                         document.body.appendChild(button)
                         dialog.close()
+                    
+                        
                     })
 
 
                 } else {
-                   
+                   dialog.textContent = ("Sorry that answer is incorrect. Try again!")
                 }
                // answer.classList.toggle.event.target()
                 
