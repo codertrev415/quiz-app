@@ -1,0 +1,90 @@
+body{
+    margin: 0;
+    padding: 0;
+    display: block;
+
+}
+.responsive-background {
+  position: relative;
+  min-height: 100vh;
+  padding: 40px; 
+  box-sizing: border-box;
+  font-family: sans-serif;
+  color: black; /* Makes your quiz text white so it pops, change as needed */
+  
+  /* Centers your quiz content nicely on the screen */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*justiy-content: center*/
+}
+
+/* This creates a hidden layer just for the background image */
+.responsive-background::before {
+  content: "";
+  position: fixed; /* Keeps it floating */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Pushes the image behind your text */
+  
+  /* Your image settings */
+  background-image: url('./images/disc-background.jpeg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  /* This changes the image opacity to 50% without fading your text! */
+  opacity: 0.5; 
+}
+/*
+.responsive-background {
+  /* Specify the path to your image */
+ /* background-image: url('./images/disc-background.jpeg');
+
+  /* Keeps the image fixed in place so it "floats" during scroll */
+  /*background-attachment: fixed;
+
+  /* Centers the image perfectly */
+ /* background-position: center center;
+
+  /* Ensures the image does not repeat like a grid */
+/*  background-repeat: no-repeat;
+
+  /* Forces the image to scale and cover the entire screen */
+/*  background-size: cover;
+
+  /* Ensures the container takes up the full viewport height */
+/*  min-height: 100vh;
+}
+
+
+
+
+
+
+
+
+/*
+hero{
+    background-image: url("./images/disc-background.jpeg");
+    
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh; 
+    width: 100%;
+}
+
+
+}*/
+
+.button{
+    height: 2rem;
+    width: auto;
+
+}
+
+

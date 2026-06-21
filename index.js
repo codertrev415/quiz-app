@@ -1,5 +1,5 @@
 const quiz = [
-    {question: "What color is an orange?", answers: ["a. orange", "b. zebra", "c. purple", "d. blue"], correct: "a. orange"},
+    {question: "What year was AI invented", answers: ["a. 2022", "b. 1945", "c. 1956", "d. 1989"], correct: "a. orange"},
     {question: "What is the 50th state?", answers: ["a. Alaska", "b. France", "c. California", "d. Hawai'i"], correct: "d. Hawai'i"},
     {question: "What is 100-77?", answers: ["a. 3", "b. 33", "c. -33", "d. 177"], correct: "b. 33"}
 ] 
@@ -42,9 +42,7 @@ function addElement(){
                         dialog.close()
 
 
-                        /*document.body.appendChild(dialog)
-                        closeDialog.textContent = ("Next")
-                        document.body.appendChild(closeDialog)*/
+                     
                     
                     
                         
@@ -52,7 +50,12 @@ function addElement(){
 
 
                 } else {
-                   dialog.textContent = ("Sorry that answer is incorrect. Try again!")
+                    closeDialog.addEventListener("click" , () =>{
+                        dialog.close()
+                    })
+                   dialog.textContent = ("Sorry that answer is incorrect. ")
+                   dialog.appendChild(closeDialog)
+                    closeDialog.textContent = ("Try Again")
                 }
                // answer.classList.toggle.event.target()
                 
