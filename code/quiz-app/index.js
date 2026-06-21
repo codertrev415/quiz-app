@@ -28,14 +28,22 @@ function addElement(){
             button.addEventListener("click", (event) => {
                 const dialog = document.createElement("dialog")
                 const closeDialog = document.createElement("button")
+                document.body.appendChild(dialog)
+                dialog.showModal()
                 if (event.target.innerText === currentQuestion.correct) {
-                    console.log()
-                    document.body.appendChild(dialog)
+                    
                     dialog.textContent = (`Yes! That's correct!. The answer is "${currentQuestion.correct}"!`)
-                    dialog.showModal()
+                    
+                    dialog.appendChild(closeDialog)
+
                     closeDialog.addEventListener("click" , () =>{
-                        document.body.appendChild(button)
-                        dialog.close()
+                        dialog.close("Next")
+
+
+                        /*document.body.appendChild(dialog)
+                        closeDialog.textContent = ("Next")
+                        document.body.appendChild(closeDialog)*/
+                    
                     
                         
                     })
