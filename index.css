@@ -10,9 +10,9 @@ body{
   padding: 40px; 
   box-sizing: border-box;
   font-family: sans-serif;
-  color: black; /* Makes your quiz text white so it pops, change as needed */
+  color: black; 
   
-  /* Centers your quiz content nicely on the screen */
+  /* Centers quiz content nicely on the screen */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,7 +35,7 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   
-  /* This changes the image opacity to 50% without fading your text! */
+
   opacity: 0.5; 
 }
 /*
