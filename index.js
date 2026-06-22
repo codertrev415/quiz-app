@@ -7,16 +7,21 @@ const quiz = [
     {question: "What is 100-77?", answers: ["a. 3", "b. 33", "c. -33", "d. 177"], correct: "b. 33"}
 ] 
 
+const heroContainer = document.createElement("div")
+const title = document.createElement("h1")
+document.body.appendChild(title)
+document.body.appendChild(heroContainer)
+title.textContent = ("Quiz App")
+title.classList = "title"
+
 function addElement(){
 
     
 
     for(let i = 0; i < quiz.length; i++){
         let currentQuestion = quiz[i]
-        //let createSection = document.createElement("section")
         let createDiv = document.createElement("div")
-        //createSection.appendChild(createDiv) //questions div
-        createDiv.textContent = (currentQuestion.question) // questions
+        createDiv.textContent = (currentQuestion.question) 
         document.body.appendChild(createDiv)
         
         for(let i = 0; i < currentQuestion.answers.length; i++){

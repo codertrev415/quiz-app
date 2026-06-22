@@ -4,6 +4,13 @@ body{
     display: block;
 
 }
+
+
+
+.title {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
 .responsive-background {
   position: relative;
   min-height: 100vh;
