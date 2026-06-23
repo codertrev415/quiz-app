@@ -9,6 +9,7 @@ body{
 
 .title {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  text-align: center;
 }
 
 .responsive-background {
