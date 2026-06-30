@@ -1,11 +1,31 @@
 const quizContainer = document.createElement("div")
 document.body.appendChild(quizContainer)
 
-const quiz = [
-    {question: "What year was AI invented", answers: ["a. 2022", "b. 1945", "c. 1956", "d. 1989"], correct: "ac. 1956"},
-    {question: "What is the 50th state?", answers: ["a. Alaska", "b. France", "c. California", "d. Hawai'i"], correct: "d. Hawai'i"},
-    {question: "What is 100-77?", answers: ["a. 3", "b. 33", "c. -33", "d. 177"], correct: "b. 33"}
-] 
+
+//const apiKey = ''
+//'url' is a user created var and will need to be declared more precisely with larger programs 
+const url = 'https://opentdb.com/api.php?amount=3&category=18&difficulty=medium&type=multiple&encode=url3986'
+
+//async keyword is mandatory for async function declaration
+async function getQuiz() {
+    try {
+       //same as with 'url', 'response' will need more care in defining re larger apps
+       //await is a mandatory keyword when call fetch in async block (eg: order has been sent to the restuarant)
+       //fetch returns promise; when promise resolves the value it returns is a Response ('res') object
+        const response = await fetch(url)
+      
+        if (!response.ok) {
+            //'throw' and 'new' are mandatory keywords, 'Error' is a constructor (constructor is a 'blueprint' method used to build specific type of object)
+            //remember that methods and constructors are functions
+            //'status' is mandatory keyword
+            throw new Error(`HTTP error: ${response.status}`)
+
+      }  //using 'data' is a convention but not baked into js
+        // 'await is being used here to pause the response until Promise is fulfilled (eg. order from restuarant has been recieved and the bag has been opened )
+         const quizData = await response.json()
+    }
+     catch (error){}
+ 
 
 const heroContainer = document.createElement("div")
 const title = document.createElement("h1")
@@ -24,7 +44,7 @@ function addElement(){
         createDiv.textContent = (currentQuestion.question) 
         document.body.appendChild(createDiv)
         
-        for(let i = 0; i < currentQuestion.answers.length; i++){
+        for(let j = 0; j < currentQuestion.answers.length; j++){
             
             let button = document.createElement("button")
             createDiv = document.createElement("div")
@@ -76,7 +96,7 @@ function addElement(){
     }
    
 
-
+}
 addElement()
 
 /*let button1 = document.getElementById(button1)
