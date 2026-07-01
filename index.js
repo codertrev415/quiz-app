@@ -19,10 +19,13 @@ async function getQuiz() {
             //remember that methods and constructors are functions
             //'status' is mandatory keyword
             throw new Error(`HTTP error: ${response.status}`)
+            
+            addElement()
 
       }  //using 'data' is a convention but not baked into js
         // 'await is being used here to pause the response until Promise is fulfilled (eg. order from restuarant has been recieved and the bag has been opened )
          const quizData = await response.json()
+         
     }
      catch (error){}
  
