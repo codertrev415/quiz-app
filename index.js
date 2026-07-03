@@ -2,12 +2,22 @@ const quizContainer = document.createElement("div")
 document.body.appendChild(quizContainer)
 
 
+const heroContainer = document.createElement("div")
+const title = document.createElement("h1")
+document.body.appendChild(title)
+document.body.appendChild(heroContainer)
+//document.getElementById('responsive-background')
+title.textContent = ("Quiz App")
+title.classList = "title"
+
+
 //const apiKey = ''
 //'url' is a user created var and will need to be declared more precisely with larger programs 
 const url = 'https://opentdb.com/api.php?amount=3&category=18&difficulty=medium&type=multiple&encode=url3986'
 
 //async keyword is mandatory for async function declaration
 async function getQuiz() {
+//try...catch is a control flow statement made of two blocks
     try {
        //same as with 'url', 'response' will need more care in defining re larger apps
        //await is a mandatory keyword when call fetch in async block (eg: order has been sent to the restuarant)
@@ -20,26 +30,37 @@ async function getQuiz() {
             //'status' is mandatory keyword
             throw new Error(`HTTP error: ${response.status}`)
             
-            addElement()
+
 
       }  //using 'data' is a convention but not baked into js
         // 'await is being used here to pause the response until Promise is fulfilled (eg. order from restuarant has been recieved and the bag has been opened )
-         const quizData = await response.json()
+        const quizData = await response.json()
+        
+        addElement(getQuiz)
          
     }
-     catch (error){}
- 
+    //try...catch is a control flow statement made of two blocks
+    //'error' is a convention and not a keyword
+     catch (error){
+        console.error("Could not retrieve quiz:", error)
+        handleError(error)
+    }  
+    
+    function handleError(error) {
+        const err = document.createElement("dialog")
+        document.body.appendChild(err)
+        err.textContent = 'Could not retrieve quiz'
+        err.showModal()
+        err.addEventListener("click", () =>  {
+            err.close()
+        }) 
+    }
 
-const heroContainer = document.createElement("div")
-const title = document.createElement("h1")
-document.body.appendChild(title)
-document.body.appendChild(heroContainer)
-title.textContent = ("Quiz App")
-title.classList = "title"
+
 
 function addElement(){
 
-    
+    //quizData.textContent = 
 
     for(let i = 0; i < quiz.length; i++){
         let currentQuestion = quiz[i]
@@ -57,6 +78,7 @@ function addElement(){
             createDiv.textContent = (currentQuestion.answers[i])
             button.appendChild(createDiv)
             button.addEventListener("click", (event) => {
+                //refactor 'dialog' so that the var name and element are not the same
                 const dialog = document.createElement("dialog")
                 const closeDialog = document.createElement("button")
                 document.body.appendChild(dialog)
@@ -100,7 +122,7 @@ function addElement(){
    
 
 }
-addElement()
+
 
 /*let button1 = document.getElementById(button1)
 
