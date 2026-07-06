@@ -42,6 +42,8 @@ async function getQuiz() {
             //'throw' and 'new' are mandatory keywords, 'Error' is a constructor (constructor is a 'blueprint' method used to build specific type of object)
             //remember that methods and constructors are functions
             //'status' is mandatory keyword
+            //throw stops function or, in this case, stops the 'if' statement
+
             throw new Error(`HTTP error: ${response.status}`)
             
 
@@ -50,29 +52,33 @@ async function getQuiz() {
         // 'await is being used here to pause the response until Promise is fulfilled (eg. order from restuarant has been recieved and the bag has been opened )
         const quizData = await response.json()
         
-        addElement(getQuiz)
+        buildDOMRender(quizData)
+        console.log(quizData)
+  
          
     }
     //try...catch is a control flow statement made of two blocks
     //'error' is a convention and not a keyword
-     catch (error){
+    catch (error){
         console.error("Could not retrieve quiz:", error)
-        handleError(error)
+        //handleError(error)
     }  
     
-    function handleError(error) {
+   /* function handleError(error) {
         const err = document.createElement("dialog")
         document.body.appendChild(err)
         err.textContent = 'Could not retrieve quiz'
         err.showModal()
         err.addEventListener("click", () =>  {
             err.close()
-        }) 
-    }
+        }) */
 
 
+}
+getQuiz()
 
-function addElement(){
+
+function buildDOMRender(quizData){
 
     //quizData.textContent = 
 
@@ -89,7 +95,7 @@ function addElement(){
           
             document.body.appendChild(createDiv)
             document.body.appendChild(button)
-            createDiv.textContent = (currentQuestion.answers[i])
+            createDiv.textContent = (currentQuestion.answers[j])
             button.appendChild(createDiv)
             button.addEventListener("click", (event) => {
                 //refactor 'dialog' so that the var name and element are not the same
@@ -130,9 +136,9 @@ function addElement(){
         
     }
 } 
-    }
+}
    
 
-}
+
 
 
