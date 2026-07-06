@@ -1,14 +1,29 @@
-const quizContainer = document.createElement("div")
-document.body.appendChild(quizContainer)
+function buildBackground(){
+    const background = document.createElement('div')
+    //background.classList.add('responsive-background')
+    document.body.appendChild(background)
+    return background
+}
+buildBackground()
 
+function buildHeader(){
+    const title = document.createElement('h1')
+    const heroContainer = document.createElement("div")
+    heroContainer.appendChild(title)
+    document.body.appendChild(heroContainer)
+    title.textContent = ("Quiz App")
+    title.classList = "title"
 
-const heroContainer = document.createElement("div")
-const title = document.createElement("h1")
-document.body.appendChild(title)
-document.body.appendChild(heroContainer)
-//document.getElementById('responsive-background')
-title.textContent = ("Quiz App")
-title.classList = "title"
+}
+buildHeader()
+
+function buildQuizContainer(){
+    const quizContainer = document.createElement('div')
+    document.body.appendChild(quizContainer)
+    quizContainer.textContent = ("Placeholder")
+}
+buildQuizContainer()
+
 
 
 //const apiKey = ''
@@ -110,9 +125,7 @@ function addElement(){
                    dialog.appendChild(closeDialog)
                     closeDialog.textContent = ("Try Again")
                 }
-               // answer.classList.toggle.event.target()
-                
-    //button.appendChild(button)
+              
             })
     
         
@@ -124,15 +137,3 @@ function addElement(){
 }
 
 
-/*let button1 = document.getElementById(button1)
-
-button1.addEventListener("click", (event) =>{
-    console.log(event)
-})
-
-
-console.log(button)
-
-console.log(`Question ${i + 1}: ${currentQuestion.question}`)
-    console.log(`Options: ${currentQuestion.answers.join(", ")}`)
-    console.log(`The correct answer is: ${currentQuestion.correct}`)*/
