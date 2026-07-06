@@ -1,6 +1,5 @@
 function buildBackground(){
     const background = document.createElement('div')
-    //background.classList.add('responsive-background')
     document.body.appendChild(background)
     return background
 }
