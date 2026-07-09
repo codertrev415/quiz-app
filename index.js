@@ -20,14 +20,16 @@ function buildQuizContainer(){
     const quizContainer = document.createElement('div')
     document.body.appendChild(quizContainer)
     quizContainer.textContent = ("Placeholder")
+    return quizContainer
 }
-buildQuizContainer()
+const quizContainer = buildQuizContainer()
+
 
 
 
 //const apiKey = ''
 //'url' is a user created var and will need to be declared more precisely with larger programs 
-const url = 'https://opentdb.com/api.php?amount=3&category=18&difficulty=medium&type=multiple&encode=url3986'
+const url = ''
 
 //async keyword is mandatory for async function declaration
 async function getQuiz() {
@@ -45,15 +47,13 @@ async function getQuiz() {
             //throw stops function or, in this case, stops the 'if' statement
 
             throw new Error(`HTTP error: ${response.status}`)
-            
-
 
       }  //using 'data' is a convention but not baked into js
         // 'await is being used here to pause the response until Promise is fulfilled (eg. order from restuarant has been recieved and the bag has been opened )
         const quizData = await response.json()
         
-        buildDOMRender(quizData)
-        console.log(quizData)
+        renderQuestions(quizData, quizContainer)
+        console.log(quizData.results)
   
          
     }
@@ -61,63 +61,71 @@ async function getQuiz() {
     //'error' is a convention and not a keyword
     catch (error){
         console.error("Could not retrieve quiz:", error)
-        //handleError(error)
+        handleError(error)
     }  
     
-   /* function handleError(error) {
+    function handleError(error) {
         const err = document.createElement("dialog")
         document.body.appendChild(err)
         err.textContent = 'Could not retrieve quiz'
         err.showModal()
         err.addEventListener("click", () =>  {
             err.close()
-        }) */
-
+        }) 
+    }
 
 }
+
 getQuiz()
 
 
-function buildDOMRender(quizData){
 
-    //quizData.textContent = 
 
-    for(let i = 0; i < quiz.length; i++){
-        let currentQuestion = quiz[i]
-        let createDiv = document.createElement("div")
-        createDiv.textContent = (currentQuestion.question) 
-        document.body.appendChild(createDiv)
-        
+
+function renderQuestions(quizData, quizContainer){
+
+    for(let i = 0; i < quizData.length; i++){
+        const questionDiv = document.createElement("div")
+        const currentQuestion = quizData[i]
+        questionDiv.textContent = (currentQuestion.question) 
+        quizContainer.appendChild(questionDiv)
+        renderAnswers(currentQuestion,questionDiv)
+    }    
+}
+
+function renderAnswers(currentQuestion, questionDiv){
+
         for(let j = 0; j < currentQuestion.answers.length; j++){
             
-            let button = document.createElement("button")
-            createDiv = document.createElement("div")
+            const button = document.createElement("button")
+            const createDiv = document.createElement("div")
           
-            document.body.appendChild(createDiv)
-            document.body.appendChild(button)
+            questionDiv.appendChild(createDiv)
+            questionDiv.appendChild(button)
             createDiv.textContent = (currentQuestion.answers[j])
             button.appendChild(createDiv)
-            button.addEventListener("click", (event) => {
-                //refactor 'dialog' so that the var name and element are not the same
+            button.addEventListener('click', (event) => {
+                const isCorrect = event.target.innerText === currentQuestion.correct
+                    showFeedbackDialog(isCorrect, currentQuestion)
+            })
+
+        }            
+}
+function showFeedbackDialog(isCorrect, currentQuestion){            
+
                 const dialog = document.createElement("dialog")
                 const closeDialog = document.createElement("button")
                 document.body.appendChild(dialog)
                 dialog.showModal()
-                if (event.target.innerText === currentQuestion.correct) {
+                if (isCorrect) {
                     
                    dialog.textContent = (`Yes! That's correct!. The answer is "${currentQuestion.correct}"!`)
                     
                     dialog.appendChild(closeDialog)
                     closeDialog.textContent = ("Next")
-                    
 
                     closeDialog.addEventListener("click" , () =>{
                         dialog.close()
-
-
-                     
-                    
-                    
                         
                     })
 
@@ -130,13 +138,11 @@ function buildDOMRender(quizData){
                    dialog.appendChild(closeDialog)
                     closeDialog.textContent = ("Try Again")
                 }
-              
-            })
-    
-        
+                      
     }
-} 
-}
+
+
+
    
 
 
