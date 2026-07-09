@@ -1,3 +1,11 @@
+const quiz = [
+    {question: 'Who is considered the father of computer science?', choices: ['a. Alan Turing', 'b. Bill Gates', 'c. Steve Jobs', 'd: Ada Lovelace'], correct: 'a. Alan Turing'},
+    {question: 'What year was the first computer bug discovered?', choices: ['a. 1945', 'b. 1951', 'c. 1937', 'd. 1965'], correct: 'a.1945'}, {question: 'Who was the first Black woman to earn a PhD in computer science?', choices:['a. Kimberly Bryant', 'b. Grace Hopper', 'c. Joy Buolamwini', 'd. Shirley Ann Jackson'], correct: 'd. Shirley Ann Jackson'}
+]
+console.log(quiz[0].question)
+console.log(quiz[1].choices)
+
+
 function buildBackground(){
     const background = document.createElement('div')
     document.body.appendChild(background)
@@ -15,6 +23,7 @@ function buildHeader(){
 
 }
 buildHeader()
+
 
 function buildQuizContainer(){
     const quizContainer = document.createElement('div')
@@ -95,14 +104,14 @@ function renderQuestions(quizData, quizContainer){
 
 function renderAnswers(currentQuestion, questionDiv){
 
-        for(let j = 0; j < currentQuestion.answers.length; j++){
+        for(let j = 0; j < currentQuestion.choices.length; j++){
             
             const button = document.createElement("button")
             const createDiv = document.createElement("div")
           
             questionDiv.appendChild(createDiv)
             questionDiv.appendChild(button)
-            createDiv.textContent = (currentQuestion.answers[j])
+            createDiv.textContent = (currentQuestion.choices[j])
             button.appendChild(createDiv)
             button.addEventListener('click', (event) => {
                 const isCorrect = event.target.innerText === currentQuestion.correct
@@ -142,8 +151,10 @@ function showFeedbackDialog(isCorrect, currentQuestion){
     }
 
 
-
    
+
+
+
 
 
 
