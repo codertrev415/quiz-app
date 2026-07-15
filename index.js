@@ -1,9 +1,6 @@
-const quiz = [
-    {question: 'Who is considered the father of computer science?', choices: ['a. Alan Turing', 'b. Bill Gates', 'c. Steve Jobs', 'd: Ada Lovelace'], correct: 'a. Alan Turing'},
-    {question: 'What year was the first computer bug discovered?', choices: ['a. 1945', 'b. 1951', 'c. 1937', 'd. 1965'], correct: 'a.1945'}, {question: 'Who was the first Black woman to earn a PhD in computer science?', choices:['a. Kimberly Bryant', 'b. Grace Hopper', 'c. Joy Buolamwini', 'd. Shirley Ann Jackson'], correct: 'd. Shirley Ann Jackson'}
-]
-console.log(quiz[0].question)
-console.log(quiz[1].choices)
+
+//console.log(quiz[0].question)
+//console.log(quiz[1].choices)
 
 
 function buildBackground(){
@@ -18,7 +15,7 @@ function buildHeader(){
     const heroContainer = document.createElement("div")
     heroContainer.appendChild(title)
     document.body.appendChild(heroContainer)
-    title.textContent = ("Quiz App")
+    title.textContent = ("CoreQuery")
     title.classList = "title"
 
 }
