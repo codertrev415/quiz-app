@@ -42,9 +42,10 @@ async function getQuiz() {
 //try...catch is a control flow statement made of two blocks
     try {
        //same as with 'url', 'response' will need more care in defining re larger apps
-       //await is a mandatory keyword when call fetch in async block (eg: order has been sent to the restuarant)
+       //await is a mandatory keyword when call fetch in async block (eg: order has been sent to the resturant)
        //fetch returns promise; when promise resolves the value it returns is a Response ('res') object
-        const response = await fetch(url)
+       //making api fetch request to node server route
+        const response = await fetch('./api/quiz')
       
         if (!response.ok) {
             //'throw' and 'new' are mandatory keywords, 'Error' is a constructor (constructor is a 'blueprint' method used to build specific type of object)

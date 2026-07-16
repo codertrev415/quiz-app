@@ -29,7 +29,21 @@ const quiz = [
 
 //'http' is a built-in module
 //'createServer is a method
+//'async' wrapper returns promise, THEN inner wrapper response logic kicks in
 //'request' is the incoming request from the front-end
 //'response' is the data sent from the back-end
-const server = http.createServer((request, response)) =>{
-}
+const server = http.createServer(async(request, response) =>{
+        try { //receiving fetch request from frontend
+            //'api' is route structure
+            if (request.url === "/api/quiz")
+
+                //tell browser we're sending JSON
+                //writeHead is a built-in method
+                response.writeHead()
+        }
+        catch {
+
+        }
+        console.log(request.url)
+       
+})
