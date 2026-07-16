@@ -35,12 +35,36 @@ const quiz = [
 const server = http.createServer(async(request, response) =>{
         try { //receiving fetch request from frontend
             //'api' is route structure
+            //'url' built-in property tells you what path was requsted
             if (request.url === "/api/quiz")
 
                 //tell browser we're sending JSON
                 //writeHead is a built-in method
-                response.writeHead()
+                //lets you set status code - '200' is successful
+                //header goes next, in this case a json payload
+                response.writeHead(200, {
+                    'Content-Type': 'application/json'
+                } );
+
+                // send JSON back
+                //response.end object and method is book-end eg. 'promise fulfilled' or problem reported
+                //'stringify' is a method that tell js to parse the json package back into a usable object
+                //'quiz' is shorthand for a key/value object
+                response.end(JSON.stringify({
+                    quiz
+                })
+            );
+            //'return' is a guard clause. if condition is met, exit function
+            return;
         }
+
+        // Serve index.html
+
+        //'/' just means root route of API
+        if (request.url === '/') {
+
+        }
+
         catch {
 
         }
