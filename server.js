@@ -33,7 +33,13 @@ const quiz = [
 //'request' is the incoming request from the front-end
 //'response' is the data sent from the back-end
 const server = http.createServer(async(request, response) =>{
-        try { //receiving fetch request from frontend
+        try { 
+            
+            //these 'if' statements just handle different requests coming from the front end. 
+
+            //request.url: When a browser connects to a server, it sends a request object. request.url contains the path of what the browser is looking for (e.g., /, /about, or /index.js).
+            
+            //receiving fetch request from frontend
             //'api' is route structure
             //'url' built-in property tells you what path was requsted
             if (request.url === "/api/quiz")
@@ -60,9 +66,29 @@ const server = http.createServer(async(request, response) =>{
 
         // Serve index.html
 
-        //'/' just means root route of API
+        //'/' just means root route of API. even though API call is made from js file, the js file is still linked to the html 'root'.  
+        // this line checks if the browser is specifically asking for the root homepage 
+        //// NOTE (future me): this route model is static/server-based — every URL
+        // hits the Node server directly. Once using React/Next.js, this becomes
+        // an SPA (Single Page Application) — routing happens client-side in the
+        // browser after one initial HTML load, not via repeated server requests. 
         if (request.url === '/') {
+            //creates a var to store absloute path to file on hard drive
+            //path.join is a built-in Node.js utility; instead of typing out whole file path, path.join glues pieces of the path together 
+            const filePath = path.join(
+            //special global var in Node that points to the absolute path of the directory where the currently running code file lives (written just like any other var arg would)   
+            // '__' is called a 'dunder'. it's used to denotw a Node.js Global vs a var that I declared myself
+                __dirname,
+            //these are the dir and file names being targeted    
+                'public', 'index.html'
+            );
+            //wait until the file is completely read
+            //'fs' is a built-in core module = 'file system'
+            const data = await fs.readFile(filePath);
 
+            response.writeHead(200, {
+                "Content-Type": "text/html"
+            })
         }
 
         catch {
