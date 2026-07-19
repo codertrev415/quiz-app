@@ -1,3 +1,5 @@
+
+
 //"http" lets Node create a web server; built into node
 
 //'require' is a built-in node keyword
@@ -5,10 +7,11 @@
 const http = require("http");
 
 //'fs' lets node read files
-const fs = require('fs');
+const fs = require('fs/promises');
 
 //'path' helps build file paths that work on multiple os
 const path = require('path');
+const { resolve } = require("dns");
 
 //choose higher ports like '3000' or '8080' to prevent errors
 //most services and common apps stick to lower ports 
@@ -18,7 +21,7 @@ const PORT = 8080;
 //this will live in schema.sql
 const quiz = [
     {question: 'Who is considered the father of computer science?', choices: ['a. Alan Turing', 'b. Bill Gates', 'c. Steve Jobs', 'd: Ada Lovelace'], correct: 'a. Alan Turing'},
-    {question: 'What year was the first computer bug discovered?', choices: ['a. 1945', 'b. 1951', 'c. 1937', 'd. 1965'], correct: 'a.1945'}, {question: 'Who was the first Black woman to earn a PhD in computer science?', choices:['a. Kimberly Bryant', 'b. Grace Hopper', 'c. Joy Buolamwini', 'd. Shirley Ann Jackson'], correct: 'd. Shirley Ann Jackson'}
+    {question: 'What year was the first computer bug discovered?', choices: ['a. 1945', 'b. 1951', 'c. 1937', 'd. 1965'], correct: 'a. 1945'}, {question: 'Who was the first Black woman to earn a PhD in computer science?', choices:['a. Kimberly Bryant', 'b. Grace Hopper', 'c. Joy Buolamwini', 'd. Shirley Ann Jackson'], correct: 'd. Shirley Ann Jackson'}
 ];
 
 
@@ -42,7 +45,7 @@ const server = http.createServer(async(request, response) =>{
             //receiving fetch request from frontend
             //'api' is route structure
             //'url' built-in property tells you what path was requsted
-            if (request.url === "/api/quiz")
+            if (request.url === "/api/quiz") {
 
                 //tell browser we're sending JSON
                 //writeHead is a built-in method
@@ -56,9 +59,7 @@ const server = http.createServer(async(request, response) =>{
                 //response.end object and method is book-end eg. 'promise fulfilled' or problem reported
                 //'stringify' is a method that tell js to parse the json package back into a usable object
                 //'quiz' is shorthand for a key/value object
-                response.end(JSON.stringify({
-                    quiz
-                })
+                response.end(JSON.stringify(quiz)
             );
             //'return' is a guard clause. if condition is met, exit function
             return;
@@ -72,10 +73,10 @@ const server = http.createServer(async(request, response) =>{
         // hits the Node server directly. Once using React/Next.js, this becomes
         // an SPA (Single Page Application) — routing happens client-side in the
         // browser after one initial HTML load, not via repeated server requests. 
-        if (request.url === '/') {
+            if (request.url === '/') {
             //creates a var to store absloute path to file on hard drive
             //path.join is a built-in Node.js utility; instead of typing out whole file path, path.join glues pieces of the path together 
-            const filePath = path.join(
+                const filePath = path.join(
             //special global var in Node that points to the absolute path of the directory where the currently running code file lives (written just like any other var arg would)   
             // '__' is called a 'dunder'. it's used to denotw a Node.js Global vs a var that I declared myself
                 __dirname,
@@ -84,16 +85,99 @@ const server = http.createServer(async(request, response) =>{
             );
             //wait until the file is completely read
             //'fs' is a built-in core module = 'file system'
-            const data = await fs.readFile(filePath);
+            //'readFile' is a native method
+            //tells program to go into the hard drive and open up a speciic ile
+            //'await' is being used to wait for a response. just like with api calls, a promise is issued even if the 'await' keyword is being used in a local environment. 
+            //'filePath' is a var declared earlier in the program
+                const data = await fs.readFile(filePath);
 
-            response.writeHead(200, {
-                "Content-Type": "text/html"
-            })
+                response.writeHead(200, {
+                    "Content-Type": "text/html"
+            });
+
+            response.end(data);
+
+            return;
         }
 
-        catch {
+            if (request.url === "/index.js"){
+
+                const filePath = path.join(
+                    __dirname, 'public', 'index.js'
+                );
+
+                const data = await fs.readFile(filePath);
+
+                response.writeHead(200, {
+            //'application/javascript' is just letting the program know what kind of data to expect
+                'Content-Type': 'application/javascript'
+            });
+            
+            response.end(data);
+
+            return;
 
         }
-        console.log(request.url)
+
+            if (request.url === '/index.css') {
+
+                const filePath = path.join(
+                    __dirname, 'public', 'index.css'
+                );
+
+                const data = await fs.readFile(filePath);
+
+                response.writeHead(200, {
+                    'Content-type': 'text/css'
+                });
+
+                response.end(data);
+
+                return;
+            }
+
+            if (request.url === '/images/disc-background.jpeg') {
+
+                const filePath = path.join(
+                    __dirname, 'public', '/images/disc-background.jpeg' 
+                );
+
+                const data = await fs.readFile(filePath);
+
+                response.writeHead(200, {
+                    'Content-Type': ('images/jpeg')
+                });
+
+                response.end(data)
+
+                return;
+            }
+            // request not found - '404'
+
+            response.writeHead(404); 
+
+            response.end('404 Not Found');
+
+        }
+
+        catch (error) {
+
+            console.log(error);
+
+            response.writeHead(500);
+
+            response.end('Internal Server Error')
+        }
+    });
+
+    // start the server
+
+    server.listen(PORT, () => {
+
+        console.log(`Server running at http://localhost:${PORT}`);
+
+    });
+    
+
        
-})
+
