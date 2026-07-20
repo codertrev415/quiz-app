@@ -1,8 +1,4 @@
 
-//console.log(quiz[0].question)
-//console.log(quiz[1].choices)
-
-
 function buildBackground(){
     const background = document.createElement('div')
     document.body.appendChild(background)
@@ -11,12 +7,13 @@ function buildBackground(){
 buildBackground()
 
 function buildHeader(){
-    const title = document.createElement('h1')
+    const title = document.createElement('img')
+    title.src = './images/Core_Query.png';
     const heroContainer = document.createElement("div")
     heroContainer.appendChild(title)
     document.body.appendChild(heroContainer)
-    title.textContent = ("CoreQuery")
-    title.classList = "title"
+    heroContainer.className = 'hero-container';
+    title.classList = "title-image"
 
 }
 buildHeader()
@@ -25,7 +22,6 @@ buildHeader()
 function buildQuizContainer(){
     const quizContainer = document.createElement('div')
     document.body.appendChild(quizContainer)
-    quizContainer.textContent = ("Placeholder")
     return quizContainer
 }
 const quizContainer = buildQuizContainer()
@@ -107,10 +103,9 @@ function renderAnswers(currentQuestion, questionDiv){
             const button = document.createElement("button")
             const createDiv = document.createElement("div")
           
-            questionDiv.appendChild(createDiv)
-            questionDiv.appendChild(button)
-            createDiv.textContent = (currentQuestion.choices[j])
-            button.appendChild(createDiv)
+            createDiv.appendChild(button); 
+            button.textContent = currentQuestion.choices[j]; 
+            questionDiv.appendChild(createDiv);
             button.addEventListener('click', (event) => {
                 const isCorrect = event.target.innerText === currentQuestion.correct
                     showFeedbackDialog(isCorrect, currentQuestion)

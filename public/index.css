@@ -1,15 +1,115 @@
-body{
+/* Base reset and layout setup */
+body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  /* Using your background image choice */
   background-image: url("./images/disc-background.jpeg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
-/* need google fonts API */
-.title {
-font-family: "Luckiest Guy", cursive;
-text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
+/* Container holding the header image */
+.hero-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+/* Modern, responsive header image styling */
+.title-image {
+  max-width: 400px; /* Limits the size so it doesn't blow up too big on desktop */
+  width: 100%;     /* Allows it to shrink automatically on small phone screens */
+  height: auto;     /* Maintains the original aspect ratio so it doesn't stretch */
+  
+  /* Gives it that same subtle shadow pop off the background */
+  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* Container holding the quiz elements */
+/* Targets the container returned by buildQuizContainer() */
+body > div:nth-of-type(2) {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Styling for the question text blocks */
+div > div {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #1a1a1a;
+}
+
+/* Modern, rounded button styling for your choices */
+button {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  /* Adding that requested corner rounding */
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0.5rem 0;
+  width: 100%;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Button interactive states */
+button:hover {
+  background-color: #4338ca;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Dialog component for feedback and errors */
+dialog {
+  border: none;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  max-width: 400px;
+}
+
+/* Dim backdrop wrapper when modal opens */
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* Modifies the dialog buttons specifically to look like control actions */
+dialog button {
+  background-color: #10b981;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+dialog button:hover {
+  background-color: #059669;
+}

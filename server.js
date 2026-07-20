@@ -135,17 +135,34 @@ const server = http.createServer(async(request, response) =>{
 
                 return;
             }
+            // Dynamic route helper to catch ANY image request inside the /images folder
+            // NOTE FOR PORTFOLIO: I originally had individual 'if' statements for every image. 
+            // When adding a second image asset, I realized it created a DRY violation. 
+            // I refactored just the image directory to dynamically resolve MIME types as a 
+            // bridge toward V2, where Express will abstract file-serving completely.   
+            if (request.url.startsWith('/images/')) {
 
-            if (request.url === '/images/disc-background.jpeg') {
+            // 1. Map out just the image types you expect to use
+                const IMAGE_MIME_TYPES = {
+                '.jpeg': 'image/jpeg',
+                '.jpg': 'image/jpeg',
+                '.png': 'image/png',
+                '.gif': 'image/gif'
+                };
 
+                //replace img file path with request.url method
                 const filePath = path.join(
-                    __dirname, 'public', '/images/disc-background.jpeg' 
+                    __dirname, 'public', request.url
                 );
+                //The path.extname(request.url) method in Node.js extracts the file extension (e.g., .html, .css) from a request URL string. It returns the extension from the last occurrence of a period (.) to the end of the string.
+                const ext = path.extname(request.url);
 
+                //'application/octet-stream' is the official MDN Web Docs definition for generic, arbitrary binary data
+                const contentType = IMAGE_MIME_TYPES[ext] || 'application/octet-stream';
                 const data = await fs.readFile(filePath);
 
                 response.writeHead(200, {
-                    'Content-Type': ('images/jpeg')
+                    'Content-Type': contentType
                 });
 
                 response.end(data)
