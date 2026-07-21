@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/codertrev415/quiz-app/issues"
   },
-  "homepage": "https://github.com/codertrev415/quiz-app#readme"
+  "homepage": "https://github.com/codertrev415/quiz-app#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "pg": "^8.22.0"
+  }
 }
