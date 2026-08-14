@@ -57,7 +57,7 @@ const server = http.createServer(async(request, response) =>{
 
                 // send JSON back
                 //response.end object and method is book-end eg. 'promise fulfilled' or problem reported
-                //'stringify' is a method that tell js to parse the json package back into a usable object
+                //'stringify' serializes (converts data into transferable file) into json text and then the frontend uses res.json in an array pr object or other fomr of data the frontend code. 
                 //'quiz' is shorthand for a key/value object
                 response.end(JSON.stringify(quiz)
             );
