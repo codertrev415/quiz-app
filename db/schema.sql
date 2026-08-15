@@ -83,6 +83,7 @@ VALUES
 
 CREATE TABLE users (
     user_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	ON DELETE RESTRICT,
     first_name VARCHAR (50) NOT NULL,
     last_name VARCHAR (50) NOT NULL,
     username VARCHAR (30) NOT NULL UNIQUE,
@@ -96,4 +97,53 @@ CREATE TABLE users (
     is_active BOOLEAN NOT NULL,
     created_at TIMESTAMPTZ NOT NULL, 
     updated_at TIMESTAMPTZ NOT NULL
+);
+CREATE TABLE subscriptions (
+    subscription_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+    user_id INTEGER NOT NULL
+        REFERENCES users(user_id)
+        ON DELETE RESTRICT,
+
+    tier VARCHAR(30) NOT NULL,
+
+    started_at TIMESTAMPTZ NOT NULL,
+    ended_at TIMESTAMPTZ,
+
+    canceled_at TIMESTAMPTZ,
+
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE terms_versions (
+    terms_version_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+    version VARCHAR(20) NOT NULL UNIQUE,
+
+    terms_content TEXT NOT NULL,
+
+    effective_at TIMESTAMPTZ NOT NULL,
+
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE terms_acceptance (
+    terms_acceptance_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+    user_id INTEGER NOT NULL
+        REFERENCES users(user_id)
+        ON DELETE RESTRICT,
+
+    terms_version_id INTEGER NOT NULL
+        REFERENCES terms_versions(terms_version_id)
+        ON DELETE RESTRICT,
+
+    accepted_at TIMESTAMPTZ NOT NULL,
+
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL,
+
+    UNIQUE (user_id, terms_version_id)
 );
