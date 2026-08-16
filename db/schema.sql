@@ -1,89 +1,69 @@
-drop database if exists corequery_db;
-create DATABASE corequery_db;
+DROP TABLE IF EXISTS choices;
+DROP TABLE IF EXISTS user_achievements;
+DROP TABLE IF EXISTS subscriptions;
+DROP TABLE IF EXISTS terms_acceptance;
+DROP TABLE IF EXISTS consent;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS questions;
 
-
-\connect corequery_db;
-
---'create' 'table' postgress keywords
 create table questions(
+	question_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
--- allows program to generate next whole number, commonly used for primary key ID columns
-	question_id SERIAL,
-
---VARCHAR stores text with a maxiumun length eg(50)
---NOT NULL requires a value
-	question TEXT not null,
-
--- PRIMARY KEY marks the column that uniquely identifies each row.
-	primary key (question_id)
+	question TEXT not null
 
 );
+
 
 create table choices(
 
-	id SERIAL PRIMARY KEY,
+	choice_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 
-	--references question number
-	question_id
+
+	question_id INTEGER NOT NULL
+        REFERENCES questions(question_id)
+        ON DELETE RESTRICT,
 	
 	choice_text TEXT not null,
-	
-	
---from questions table	
-	question_id INT not null,
-	
-	PRIMARY KEY (choice_id),
-	
---foreign key links tables -relational database-
---references says every child _id must match parent _id	
---foreign key references column/row NOT table
-	
-	FOREIGN KEY (question_id) REFERENCES question(id)(question_id)
-
--- if id is deleted, deleting this row triggers automatic deletion of dependent rows elsewhere	
-	ON DELETE CASCADE	
-	
+	is_correct BOOLEAN not null
+		
 );
 
-INSERT INTO questions (question, correct_answer)
+INSERT INTO questions (question)
 VALUES
 (
-'Who is considered the father of computer science?',
-'a. Alan Turing'
+'Who is considered the father of computer science?'
 ),
 (
-'What year was the first computer bug discovered?',
-'a. 1945'
+'What year was the first computer bug discovered?'
 ),
 (
-'Who was the first Black woman to earn a PhD in computer science?',
-'d. Shirley Ann Jackson'
+'Who was the first Black woman to earn a PhD in computer science?'
 );
 
-INSERT INTO choices (question_id, choice_text)
+INSERT INTO choices (question_id, choice_text, is_correct)
 VALUES
-(1, 'a. Alan Turing'),
-(1, 'b. Bill Gates'),
-(1, 'c. Steve Jobs'),
-(1, 'd. Ada Lovelace');
+(1, 'a. Alan Turing', true),
+(1, 'b. Bill Gates', false),
+(1, 'c. Steve Jobs', false),
+(1, 'd. Ada Lovelace', false);
 
-INSERT INTO choices (question_id, choice_text)
-VALUES
-(2, 'a. 1945'),
-(2, 'b. 1951'),
-(2, 'c. 1937'),
-(2, 'd. 1965');
 
-INSERT INTO choices (question_id, choice_text)
+INSERT INTO choices (question_id, choice_text, is_correct)
 VALUES
-(3, 'a. Kimberly Bryant'),
-(3, 'b. Grace Hopper'),
-(3, 'c. Joy Buolamwini'),
-(3, 'd. Shirley Ann Jackson');
+(2, 'a. 1945', true),
+(2, 'b. 1951', false),
+(2, 'c. 1937', false),
+(2, 'd. 1965', false);
+
+INSERT INTO choices (question_id, choice_text, is_correct)
+VALUES
+(3, 'a. Kimberly Bryant', false),
+(3, 'b. Grace Hopper', false),
+(3, 'c. Joy Buolamwini', false),
+(3, 'd. Shirley Ann Jackson', true);
 
 CREATE TABLE users (
     user_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	ON DELETE RESTRICT,
     first_name VARCHAR (50) NOT NULL,
     last_name VARCHAR (50) NOT NULL,
     username VARCHAR (30) NOT NULL UNIQUE,
@@ -146,4 +126,23 @@ CREATE TABLE terms_acceptance (
     updated_at TIMESTAMPTZ NOT NULL,
 
     UNIQUE (user_id, terms_version_id)
+);
+
+CREATE TABLE user_achievements (
+    user_achievement_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+    user_id INTEGER NOT NULL
+        REFERENCES users(user_id)
+        ON DELETE RESTRICT,
+
+    badge_type VARCHAR(30) NOT NULL,
+
+    question_id INTEGER
+        REFERENCES questions(question_id)
+        ON DELETE RESTRICT,
+
+    earned_at TIMESTAMPTZ NOT NULL,
+
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL
 );
