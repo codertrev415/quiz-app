@@ -1,5 +1,66 @@
+# CoreQuery
 
-background image: 
+A CS trivia quiz app, hand-built from first principles to demonstrate core JavaScript fundamentals before layering on a database, authentication, and a modernized frontend.
 
-Photo by <a href="https://unsplash.com/@sebastiansvenson?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Sebastian Svenson</a> on <a href="https://unsplash.com/photos/blue-and-white-round-illustration-LpbyDENbQQg?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-      
+## Current Status
+
+**What's live right now:**
+- A vanilla JS/HTML/CSS quiz app served by a plain Node `http` server (`server.js`) — no framework, no `express`, no ORM.
+- Quiz questions are hardcoded in a `quiz` array inside `server.js`.
+- The server hand-rolls its own routing (`if (request.url === ...)`) and static file serving for HTML, JS, CSS, and images, including a dynamic MIME-type resolver for the `/images/` route.
+- Frontend (`public/index.js`) fetches from `/api/quiz`, builds the DOM entirely with `document.createElement`, and handles answer feedback via native `<dialog>` elements — no templating library.
+
+**What's modeled but not yet connected:**
+- `db/schema.sql` defines a full PostgreSQL schema — `questions`, `choices`, `users`, `subscriptions`, `terms_versions`, `terms_acceptance`, and `user_achievements` — but `server.js` does not query Postgres at all yet. The `pg` package is installed (see `package.json`) but unused in code. This is the next real integration step: swap the hardcoded `quiz` array for a `questions`/`choices` query.
+
+## Why It's Built This Way
+
+This project is a deliberate "build it by hand first" exercise. Using the built-in `http` module instead of Express, and manual DOM construction instead of React, was intentional — the goal was to internalize what frameworks abstract away (routing, MIME handling, promise-based async flow) before reaching for tools that do it automatically.
+
+The codebase is heavily commented in a teaching style — notes-to-future-self explaining *why* a given approach was chosen (e.g., the image-serving route was refactored from repeated per-file `if` statements into a single dynamic MIME-type lookup once a DRY violation became obvious).
+
+## Planned: CoreQuery v2
+
+The schema already anticipates a broader feature set than the current quiz app uses:
+- **Auth & accounts** — `users` table with password hashing, TOTP fields, login-attempt tracking, and account lock-out support.
+- **Subscriptions** — tiered access, tracked via `subscriptions`.
+- **Terms of service versioning** — `terms_versions` + `terms_acceptance`, so consent is tracked per version.
+- **Achievements** — one badge per completed quiz (`user_achievements`), with user level derived from badge count rather than stored redundantly.
+
+v2 will migrate the server from raw `http` to Express, wire in the `pg`-backed schema above, and modernize the frontend — likely React. Per-question correctness auditing and percentile ranking were deliberately scoped *out* of v1 achievements to keep the data model minimal while still demonstrating the pattern.
+
+## Tech Stack
+
+- **Runtime:** Node.js (CommonJS)
+- **Server:** Built-in `http` module (Express planned for v2)
+- **Database:** PostgreSQL (schema defined, not yet integrated)
+- **Frontend:** Vanilla JavaScript, HTML, CSS — no framework yet
+- **Dependencies:** `dotenv`, `pg`
+
+## Project Structure
+
+```
+core-query/
+├── db/
+│   └── schema.sql       # Full Postgres schema (questions, users, subscriptions, achievements, etc.)
+├── public/
+│   ├── index.html
+│   ├── index.js          # Frontend: fetch, DOM rendering, dialogs
+│   ├── index.css
+│   └── images/
+├── server.js              # Node http server: routing, static files, /api/quiz
+├── .env
+└── package.json
+```
+
+## Running Locally
+
+```bash
+npm install
+node server.js
+```
+
+Server runs at `http://localhost:8080`.
+
+> **Note:** Database setup (`db/schema.sql`) is not yet required to run the app, since `server.js` currently serves quiz data from a hardcoded array rather than Postgres.
+
